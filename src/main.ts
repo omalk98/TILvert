@@ -32,7 +32,7 @@ async function main() {
       )}`
     );
 
-    processFile(
+    await processFile(
       input,
       argMap.get("title") as string,
       argMap.get("stylesheet") as string,

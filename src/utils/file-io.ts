@@ -159,28 +159,33 @@ export default class FileIO {
     path: string,
     extension?: string
   ): Promise<Array<string>> => {
-    const filenames: Array<string> = [];
-    const files = await readdir(path, { withFileTypes: true });
+    try {
+      const filenames: Array<string> = [];
+      const files = await readdir(path, { withFileTypes: true });
 
-    files.forEach((file) => {
-      const filePath = join(path, file.name);
+      files.forEach((file) => {
+        const filePath = join(path, file.name);
 
-      if (file.isDirectory()) {
-        const subFiles = this.readDirectoryRecursiveSync(filePath, extension);
+        if (file.isDirectory()) {
+          const subFiles = this.readDirectoryRecursiveSync(filePath, extension);
 
-        subFiles.forEach((filename) => {
-          filenames.push(filename);
-        });
-      } else {
-        if (extension) {
-          if (filePath.toLocaleLowerCase().endsWith(`.${extension}`)) {
-            filenames.push(filePath);
-          }
-        } else filenames.push(filePath);
-      }
-    });
+          subFiles.forEach((filename) => {
+            filenames.push(filename);
+          });
+        } else {
+          if (extension) {
+            if (filePath.toLocaleLowerCase().endsWith(`.${extension}`)) {
+              filenames.push(filePath);
+            }
+          } else filenames.push(filePath);
+        }
+      });
 
-    return filenames;
+      return filenames;
+    } catch (e) {
+      console.error(e);
+      return [];
+    }
   };
 
   public static join = (...paths: Array<string>): string => {

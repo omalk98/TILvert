@@ -35,7 +35,7 @@ function main() {
         if (yield utils_1.FileIO.isFile(input)) {
             console.log(`Input File: ${utils_1.FileIO.resolve(input)}`);
             console.log(`Output directory: ${utils_1.FileIO.resolve(argMap.get("outputDirectory"))}`);
-            (0, utils_1.processFile)(input, argMap.get("title"), argMap.get("stylesheet"), argMap.get("outputDirectory"), argMap.get("extension"), meta, true);
+            yield (0, utils_1.processFile)(input, argMap.get("title"), argMap.get("stylesheet"), argMap.get("outputDirectory"), argMap.get("extension"), meta, true);
         }
         else if (yield utils_1.FileIO.isDirectory(input)) {
             console.log(`Input Directory: ${utils_1.FileIO.resolve(input)}`);

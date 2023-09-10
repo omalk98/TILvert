@@ -136,27 +136,33 @@ FileIO.deleteFile = (path) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 FileIO.readDirectoryRecursive = (path, extension) => __awaiter(void 0, void 0, void 0, function* () {
-    const filenames = [];
-    const files = yield (0, promises_1.readdir)(path, { withFileTypes: true });
-    files.forEach((file) => {
-        const filePath = (0, path_1.join)(path, file.name);
-        if (file.isDirectory()) {
-            const subFiles = _a.readDirectoryRecursiveSync(filePath, extension);
-            subFiles.forEach((filename) => {
-                filenames.push(filename);
-            });
-        }
-        else {
-            if (extension) {
-                if (filePath.toLocaleLowerCase().endsWith(`.${extension}`)) {
-                    filenames.push(filePath);
-                }
+    try {
+        const filenames = [];
+        const files = yield (0, promises_1.readdir)(path, { withFileTypes: true });
+        files.forEach((file) => {
+            const filePath = (0, path_1.join)(path, file.name);
+            if (file.isDirectory()) {
+                const subFiles = _a.readDirectoryRecursiveSync(filePath, extension);
+                subFiles.forEach((filename) => {
+                    filenames.push(filename);
+                });
             }
-            else
-                filenames.push(filePath);
-        }
-    });
-    return filenames;
+            else {
+                if (extension) {
+                    if (filePath.toLocaleLowerCase().endsWith(`.${extension}`)) {
+                        filenames.push(filePath);
+                    }
+                }
+                else
+                    filenames.push(filePath);
+            }
+        });
+        return filenames;
+    }
+    catch (e) {
+        console.error(e);
+        return [];
+    }
 });
 FileIO.join = (...paths) => {
     return (0, path_1.join)(...paths);
