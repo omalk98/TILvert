@@ -14,10 +14,33 @@ $ npm install -g https://github.com/omalk98/TILvert.git
 $ npm uninstall -g tilvert
 ```
 
+## Build From Source
+
+```bash
+$ git clone https://github.com/omalk98/TILvert.git
+$ cd TILvert
+$ npm install
+$ npm run build
+```
+
 ## Usage
+
+### Installed
 
 ```bash
 $ tilvert [flags/options] <path>
+```
+
+### From Source
+
+```bash
+$ node dist/src/main.js [flags/options] <path>
+```
+
+OR
+
+```bash
+$ npm run start [flags/options] <path>
 ```
 
 If no path is specified, TILvert will read the current directory recursively to find all files with the matching extension (default "txt").
