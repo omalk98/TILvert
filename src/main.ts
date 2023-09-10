@@ -64,6 +64,9 @@ async function main() {
         meta
       );
     }
+  } else {
+    console.error(`Error: Unable to read file/folder. <${input}>`);
+    return;
   }
 
   generateIndex(

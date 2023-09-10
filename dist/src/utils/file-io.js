@@ -44,8 +44,7 @@ FileIO.isFile = (path) => __awaiter(void 0, void 0, void 0, function* () {
         const stats = yield (0, promises_1.stat)(path);
         return stats.isFile();
     }
-    catch (e) {
-        console.error(e);
+    catch (_b) {
         return false;
     }
 });
@@ -54,8 +53,7 @@ FileIO.isDirectory = (path) => __awaiter(void 0, void 0, void 0, function* () {
         const stats = yield (0, promises_1.stat)(path);
         return stats.isDirectory();
     }
-    catch (e) {
-        console.error(e);
+    catch (_c) {
         return false;
     }
 });
@@ -63,7 +61,7 @@ FileIO.mkdirIfNotExists = (path) => __awaiter(void 0, void 0, void 0, function* 
     try {
         yield (0, promises_1.stat)(path);
     }
-    catch (e) {
+    catch (_d) {
         yield (0, promises_1.mkdir)(path, { recursive: true });
     }
 });

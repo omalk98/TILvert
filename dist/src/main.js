@@ -45,6 +45,10 @@ function main() {
                 yield (0, utils_1.processFile)(files[i], argMap.get("title"), argMap.get("stylesheet"), argMap.get("outputDirectory"), argMap.get("extension"), meta);
             }
         }
+        else {
+            console.error(`Error: Unable to read file/folder. <${input}>`);
+            return;
+        }
         (0, utils_1.generateIndex)(argMap.get("outputDirectory"), argMap.get("stylesheet"), meta);
     });
 }

@@ -15,8 +15,7 @@ export default class FileIO {
     try {
       const stats = await stat(path);
       return stats.isFile();
-    } catch (e) {
-      console.error(e);
+    } catch {
       return false;
     }
   };
@@ -25,8 +24,7 @@ export default class FileIO {
     try {
       const stats = await stat(path);
       return stats.isDirectory();
-    } catch (e) {
-      console.error(e);
+    } catch {
       return false;
     }
   };
@@ -34,7 +32,7 @@ export default class FileIO {
   public static mkdirIfNotExists = async (path: string): Promise<void> => {
     try {
       await stat(path);
-    } catch (e) {
+    } catch {
       await mkdir(path, { recursive: true });
     }
   };
