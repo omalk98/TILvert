@@ -8,11 +8,11 @@ class Info {
         let help = `Usage: ${(_a = process.env.npm_package_name) !== null && _a !== void 0 ? _a : package_json_1.name} [flags/options]... [file/folder]...\n`;
         help += "Flags:\n";
         arg_map_1.CLIArgumentMap.filter((arg) => arg.is_flag).forEach((arg) => {
-            help += `  ${arg.short_form ? `-${arg.short_form}, ` : ""}--${arg.long_form.padEnd(arg.short_form ? 18 : 22)} ${arg.description}\n`;
+            help += `  ${arg.short_form ? `-${arg.short_form}, ` : ""}--${arg.long_form.padEnd(arg.short_form ? 18 : 22)} ${arg.description}${arg.default ? ` Default: <${arg.default}>` : ""}\n`;
         });
         help += "Options:\n";
         arg_map_1.CLIArgumentMap.filter((arg) => !arg.is_flag).forEach((arg) => {
-            help += `  ${arg.short_form ? `-${arg.short_form}, ` : ""}--${arg.long_form.padEnd(arg.short_form ? 18 : 22)} ${arg.description}\n`;
+            help += `  ${arg.short_form ? `-${arg.short_form}, ` : ""}--${arg.long_form.padEnd(arg.short_form ? 18 : 22)} ${arg.description}${arg.default ? ` Default: <${arg.default}>` : ""}\n`;
         });
         console.log(help);
     }

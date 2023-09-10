@@ -66,7 +66,7 @@ exports.CLIArgumentMap = [
         key: "outputDirectory",
         long_form: "output",
         short_form: "o",
-        description: "Path to the output directory. Default (./til).",
+        description: "Path to the output directory.",
         default: "./til",
     },
     {
@@ -82,7 +82,7 @@ exports.CLIArgumentMap = [
         key: "extension",
         long_form: "extension",
         short_form: "e",
-        description: "Extension for the files in the input directory. (Ignored if input is file). Default (txt).",
+        description: "Extension for the files in the input directory. (Ignored if input is file)",
         default: "txt",
     },
     {

@@ -11,8 +11,8 @@ export default class Info {
     CLIArgumentMap.filter((arg) => arg.is_flag).forEach((arg) => {
       help += `  ${
         arg.short_form ? `-${arg.short_form}, ` : ""
-      }--${arg.long_form.padEnd(arg.short_form ? 18 : 22)} ${
-        arg.description
+      }--${arg.long_form.padEnd(arg.short_form ? 18 : 22)} ${arg.description}${
+        arg.default ? ` Default: <${arg.default}>` : ""
       }\n`;
     });
 
@@ -20,8 +20,8 @@ export default class Info {
     CLIArgumentMap.filter((arg) => !arg.is_flag).forEach((arg) => {
       help += `  ${
         arg.short_form ? `-${arg.short_form}, ` : ""
-      }--${arg.long_form.padEnd(arg.short_form ? 18 : 22)} ${
-        arg.description
+      }--${arg.long_form.padEnd(arg.short_form ? 18 : 22)} ${arg.description}${
+        arg.default ? ` Default: <${arg.default}>` : ""
       }\n`;
     });
 

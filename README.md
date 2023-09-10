@@ -76,7 +76,24 @@ TILvert is licensed under the [MIT License](https://mit-license.org/)
 
 - [x] Convert markdown files to HTML
 - [x] Replicate directory structure in output directory
+- [x] Non-destructive (Does not delete files in output directory)
+- [x] Customizable HTML page title
 - [x] Customizable HTML page with meta tags
 - [x] Customizable stylesheet
 - [x] Customizable extension for input files
 - [x] Customizable output directory
+
+## Examples
+
+### Installed
+
+```bash
+$ tilvert -e txt -o ./til -s https://cdn.jsdelivr.net/npm/water.css@2/out/water.css --title "TIL" --author "omalk" --description "Today I Learned" --keywords "til, today i learned" --robots "index, follow" --generator "TILvert" --theme-color "#000000" ./example
+```
+
+### From Source
+
+```bash
+$ node dist/src/main.js --extension txt --output ./til --stylesheet https://cdn.jsdelivr.net/npm/water.css@2/out/water.css
+$ npm run start -- --extension txt --output ./til --stylesheet https://cdn.jsdelivr.net/npm/water.css@2/out/water.css
+```

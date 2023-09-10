@@ -78,7 +78,7 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     key: "outputDirectory",
     long_form: "output",
     short_form: "o",
-    description: "Path to the output directory. Default (./til).",
+    description: "Path to the output directory.",
     default: "./til",
   },
   {
@@ -95,7 +95,7 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     long_form: "extension",
     short_form: "e",
     description:
-      "Extension for the files in the input directory. (Ignored if input is file). Default (txt).",
+      "Extension for the files in the input directory. (Ignored if input is file)",
     default: "txt",
   },
   {
