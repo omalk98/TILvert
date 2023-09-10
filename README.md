@@ -5,8 +5,13 @@ A simple tool to convert TILs from markdown files to HTML
 ## Installation
 
 ```bash
-$ cd TILvert
-$ npm install -g
+$ npm install -g https://github.com/omalk98/TILvert.git
+```
+
+## Uninstall
+
+```bash
+$ npm uninstall -g tilvert
 ```
 
 ## Usage
