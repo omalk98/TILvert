@@ -148,6 +148,15 @@ export default class FileIO {
     return filenames;
   }
 
+  public static deleteFile = async (path: string): Promise<boolean> => {
+    try {
+      await unlink(path);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
   public static readDirectoryRecursive = async (
     path: string,
     extension?: string

@@ -7,13 +7,14 @@
   "version": "0.1.0",
   "description": "Markdown to HTML CLI converter",
   "main": "./dist/src/main.js",
-  "bin" : {
+  "bin": {
     "tilvert": "./dist/src/main.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./dist/src/main.js",
     "dev": "tsc && node ./dist/src/main.js",
+    "deploy": "gh-pages -d ./til",
     "build": "tsc"
   },
   "keywords": [
@@ -25,6 +26,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.5.9",
+    "gh-pages": "^6.0.0",
     "typescript": "^5.2.2"
   }
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { processArguments, processFile, FileIO } from "./utils";
+import { processArguments, processFile, generateIndex, FileIO } from "./utils";
 import { Info } from "./helpers";
 
 async function main() {
@@ -47,17 +47,23 @@ async function main() {
       argMap.get("extension") as string
     );
 
-    files.forEach((file) => {
-      processFile(
-        file,
+    for (let i = 0; i < files.length; i++) {
+      await processFile(
+        files[i],
         argMap.get("title") as string,
         argMap.get("stylesheet") as string,
         outDir,
         argMap.get("extension") as string,
         meta
       );
-    });
+    }
   }
+
+  generateIndex(
+    argMap.get("outputDirectory") as string,
+    argMap.get("stylesheet") as string,
+    meta
+  );
 }
 
 main();

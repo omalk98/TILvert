@@ -65,7 +65,7 @@ ${body.join("")}
     attributes?: Object
   ): string {
     return this.self_closing_tags.includes(name)
-      ? `<${name} ${this.processAttributes(attributes)} />\n`
-      : `<${name} ${this.processAttributes(attributes)}>${content}</${name}>\n`;
+      ? `<${name}${this.processAttributes(attributes)} />\n`
+      : `<${name}${this.processAttributes(attributes)}>${content}</${name}>\n`;
   }
 }
