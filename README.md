@@ -40,7 +40,8 @@ $ node dist/src/main.js [flags/options] <path>
 OR
 
 ```bash
-$ npm run start [flags/options] <path>
+$ npm run start -- [flags/options] <path>
+$ pnpm run start [flags/options] <path>
 ```
 
 If no path is specified, TILvert will read the current directory recursively to find all files with the matching extension (default "txt").
