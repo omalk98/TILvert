@@ -16,7 +16,7 @@ export default class FileIO {
       const stats = await stat(path);
       return stats.isFile();
     } catch (e) {
-      console.log(e);
+      console.error(e);
       return false;
     }
   };
@@ -26,7 +26,7 @@ export default class FileIO {
       const stats = await stat(path);
       return stats.isDirectory();
     } catch (e) {
-      console.log(e);
+      console.error(e);
       return false;
     }
   };
@@ -44,7 +44,7 @@ export default class FileIO {
       const data = await readFile(path, "utf8");
       return data;
     } catch (e) {
-      console.log(e);
+      console.error(e);
       return null;
     }
   };
@@ -61,7 +61,7 @@ export default class FileIO {
       await writeFile(path, data, "utf8");
       return true;
     } catch (e) {
-      console.log(e);
+      console.error(e);
       return false;
     }
   };
@@ -91,7 +91,7 @@ export default class FileIO {
 
       return true;
     } catch (e) {
-      console.log(e);
+      console.error(e);
       return false;
     }
   };
