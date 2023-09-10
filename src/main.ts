@@ -25,6 +25,13 @@ async function main() {
   ];
 
   if (await FileIO.isFile(input)) {
+    console.log(`Input File: ${FileIO.resolve(input)}`);
+    console.log(
+      `Output directory: ${FileIO.resolve(
+        argMap.get("outputDirectory") as string
+      )}`
+    );
+
     processFile(
       input,
       argMap.get("title") as string,
@@ -35,12 +42,12 @@ async function main() {
       true
     );
   } else if (await FileIO.isDirectory(input)) {
-    const outDir = argMap.get("outputDirectory") as string;
-    console.log(`Output directory: ${outDir}`);
-    const success = await FileIO.replicateDirectoryStructure(input, outDir);
-    if (!success) {
-      console.error("Error: Unable to replicate directory structure.");
-    }
+    console.log(`Input Directory: ${FileIO.resolve(input)}`);
+    console.log(
+      `Output directory: ${FileIO.resolve(
+        argMap.get("outputDirectory") as string
+      )}`
+    );
 
     const files = await FileIO.readDirectoryRecursive(
       input,
@@ -52,7 +59,7 @@ async function main() {
         files[i],
         argMap.get("title") as string,
         argMap.get("stylesheet") as string,
-        outDir,
+        argMap.get("outputDirectory") as string,
         argMap.get("extension") as string,
         meta
       );

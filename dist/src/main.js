@@ -33,18 +33,16 @@ function main() {
             { key: "theme-color", value: argMap.get("theme-color") },
         ];
         if (yield utils_1.FileIO.isFile(input)) {
+            console.log(`Input File: ${utils_1.FileIO.resolve(input)}`);
+            console.log(`Output directory: ${utils_1.FileIO.resolve(argMap.get("outputDirectory"))}`);
             (0, utils_1.processFile)(input, argMap.get("title"), argMap.get("stylesheet"), argMap.get("outputDirectory"), argMap.get("extension"), meta, true);
         }
         else if (yield utils_1.FileIO.isDirectory(input)) {
-            const outDir = argMap.get("outputDirectory");
-            console.log(`Output directory: ${outDir}`);
-            const success = yield utils_1.FileIO.replicateDirectoryStructure(input, outDir);
-            if (!success) {
-                console.error("Error: Unable to replicate directory structure.");
-            }
+            console.log(`Input Directory: ${utils_1.FileIO.resolve(input)}`);
+            console.log(`Output directory: ${utils_1.FileIO.resolve(argMap.get("outputDirectory"))}`);
             const files = yield utils_1.FileIO.readDirectoryRecursive(input, argMap.get("extension"));
             for (let i = 0; i < files.length; i++) {
-                yield (0, utils_1.processFile)(files[i], argMap.get("title"), argMap.get("stylesheet"), outDir, argMap.get("extension"), meta);
+                yield (0, utils_1.processFile)(files[i], argMap.get("title"), argMap.get("stylesheet"), argMap.get("outputDirectory"), argMap.get("extension"), meta);
             }
         }
         (0, utils_1.generateIndex)(argMap.get("outputDirectory"), argMap.get("stylesheet"), meta);

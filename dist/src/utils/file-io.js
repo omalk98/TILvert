@@ -163,4 +163,7 @@ FileIO.readDirectoryRecursive = (path, extension) => __awaiter(void 0, void 0, v
 FileIO.join = (...paths) => {
     return (0, path_1.join)(...paths);
 };
+FileIO.resolve = (...paths) => {
+    return (0, path_1.resolve)(...paths);
+};
 exports.default = FileIO;

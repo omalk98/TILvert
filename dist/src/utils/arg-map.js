@@ -37,7 +37,7 @@ function processArguments(argv) {
         else
             arg_map.set(arg.key, arg.default);
     });
-    if (lastIndex + 1 < argv.length)
+    if (lastIndex + 1 <= argv.length)
         input = argv[argv.length - 1];
     return [arg_map, input];
 }

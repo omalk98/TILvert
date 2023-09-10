@@ -8,7 +8,7 @@ import {
   rmdir,
   unlink,
 } from "fs/promises";
-import { join } from "path";
+import { join, resolve } from "path";
 
 export default class FileIO {
   public static isFile = async (path: string): Promise<boolean> => {
@@ -187,5 +187,9 @@ export default class FileIO {
 
   public static join = (...paths: Array<string>): string => {
     return join(...paths);
+  };
+
+  public static resolve = (...paths: Array<string>): string => {
+    return resolve(...paths);
   };
 }
