@@ -26,15 +26,15 @@ If no path is specified, TILvert will read the current directory recursively to 
 
 ### Options
 
-| Option                        | Description                                                                                |
-| ----------------------------- | ------------------------------------------------------------------------------------------ |
-| -e, --extension <extension>   | Extension for the files in the input directory. (Ignored if input is file). Default (txt). |
-| -o, --output <output>         | Path to the output directory. Default (./til).                                             |
-| -s, --stylesheet <stylesheet> | Path to the stylesheet.                                                                    |
-| --title <title>               | Title of the HTML page.                                                                    |
-| --author <author>             | Author of the HTML page.                                                                   |
-| --description <description>   | Description of the HTML page.                                                              |
-| --keywords <keywords>         | Keywords of the HTML page.                                                                 |
-| --robots <robots>             | Robots of the HTML page.                                                                   |
-| --generator <generator>       | Generator of the HTML page.                                                                |
-| --theme-color <theme-color>   | Theme color of the HTML page.                                                              |
+| Option                              | Description                                                                                |
+| ----------------------------------- | ------------------------------------------------------------------------------------------ |
+| -e, --extension &lt;extension&gt;   | Extension for the files in the input directory. (Ignored if input is file). Default (txt). |
+| -o, --output &lt;output&gt;         | Path to the output directory. Default (./til).                                             |
+| -s, --stylesheet &lt;stylesheet&gt; | Path to the stylesheet.                                                                    |
+| --title &lt;title&gt;               | Title of the HTML page.                                                                    |
+| --author &lt;author&gt;             | Author of the HTML page.                                                                   |
+| --description &lt;description&gt;   | Description of the HTML page.                                                              |
+| --keywords &lt;keywords&gt;         | Keywords of the HTML page.                                                                 |
+| --robots &lt;robots&gt;             | Robots of the HTML page.                                                                   |
+| --generator &lt;generator&gt;       | Generator of the HTML page.                                                                |
+| --theme-color &lt;theme-color&gt;   | Theme color of the HTML page.                                                              |
