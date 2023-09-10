@@ -7,6 +7,7 @@ export default class TILvertHTMLDocument {
     "br",
     "hr",
     "meta",
+    "link",
   ];
 
   constructor() {
@@ -34,10 +35,10 @@ export default class TILvertHTMLDocument {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-${head.join()}
+${head.join("")}
 </head>
 <body>
-${body.join()}
+${body.join("")}
 </body>
 </html>
 `;
@@ -65,8 +66,6 @@ ${body.join()}
   ): string {
     return this.self_closing_tags.includes(name)
       ? `<${name} ${this.processAttributes(attributes)} />\n`
-      : `<${name} ${this.processAttributes(
-          attributes
-        )}>\n${content}</${name}>\n`;
+      : `<${name} ${this.processAttributes(attributes)}>${content}</${name}>\n`;
   }
 }

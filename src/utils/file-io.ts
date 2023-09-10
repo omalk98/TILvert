@@ -1,3 +1,4 @@
+import { readdirSync } from "fs";
 import {
   stat,
   mkdir,
@@ -7,6 +8,7 @@ import {
   rmdir,
   unlink,
 } from "fs/promises";
+import { join } from "path";
 
 export default class FileIO {
   public static isFile = async (path: string): Promise<boolean> => {
@@ -54,7 +56,7 @@ export default class FileIO {
     try {
       let tmp = path.split("/");
       tmp.pop();
-      this.mkdirIfNotExists(tmp.join("/"));
+      await this.mkdirIfNotExists(join(...tmp));
 
       await writeFile(path, data, "utf8");
       return true;
@@ -69,18 +71,19 @@ export default class FileIO {
     destination: string
   ): Promise<boolean> => {
     try {
+      await this.clearDirectory(join(destination, source));
       const files = await readdir(source);
 
       await Promise.all(
         files.map(async (file) => {
-          const dirPath = `${source}/${file}`;
+          const dirPath = join(source, file);
           const stats = await stat(dirPath);
 
           if (stats.isDirectory()) {
-            await this.mkdirIfNotExists(`${destination}/${file}`);
+            await this.mkdirIfNotExists(join(destination, dirPath));
             await this.replicateDirectoryStructure(
               dirPath,
-              `${destination}/${file}`
+              join(destination, dirPath)
             );
           }
         })
@@ -95,14 +98,13 @@ export default class FileIO {
 
   public static clearDirectory = async (path: string): Promise<boolean> => {
     try {
-      const files = await readdir(path);
+      const files = await readdir(path, { withFileTypes: true });
 
       await Promise.all(
         files.map(async (file) => {
-          const dirPath = `${path}/${file}`;
-          const stats = await stat(dirPath);
+          const dirPath = join(path, file.name);
 
-          if (stats.isDirectory()) {
+          if (file.isDirectory()) {
             await this.clearDirectory(dirPath);
           } else {
             await unlink(dirPath);
@@ -114,8 +116,67 @@ export default class FileIO {
 
       return true;
     } catch (e) {
-      console.log(e);
       return false;
     }
+  };
+
+  public static readDirectoryRecursiveSync(
+    path: string,
+    extension?: string
+  ): Array<string> {
+    const filenames: Array<string> = [];
+    const files = readdirSync(path, { withFileTypes: true });
+
+    files.forEach((file) => {
+      const filePath = join(path, file.name);
+
+      if (file.isDirectory()) {
+        const subFiles = this.readDirectoryRecursiveSync(filePath, extension);
+
+        subFiles.forEach((filename) => {
+          filenames.push(filename);
+        });
+      } else {
+        if (extension) {
+          if (filePath.toLocaleLowerCase().endsWith(`.${extension}`)) {
+            filenames.push(filePath);
+          }
+        } else filenames.push(filePath);
+      }
+    });
+
+    return filenames;
+  }
+
+  public static readDirectoryRecursive = async (
+    path: string,
+    extension?: string
+  ): Promise<Array<string>> => {
+    const filenames: Array<string> = [];
+    const files = await readdir(path, { withFileTypes: true });
+
+    files.forEach((file) => {
+      const filePath = join(path, file.name);
+
+      if (file.isDirectory()) {
+        const subFiles = this.readDirectoryRecursiveSync(filePath, extension);
+
+        subFiles.forEach((filename) => {
+          filenames.push(filename);
+        });
+      } else {
+        if (extension) {
+          if (filePath.toLocaleLowerCase().endsWith(`.${extension}`)) {
+            filenames.push(filePath);
+          }
+        } else filenames.push(filePath);
+      }
+    });
+
+    return filenames;
+  };
+
+  public static join = (...paths: Array<string>): string => {
+    return join(...paths);
   };
 }

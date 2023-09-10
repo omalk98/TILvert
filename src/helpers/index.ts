@@ -1,4 +1,3 @@
-import getHelp from "./get-help";
-import getVersion from "./get-version";
+import Info from "./info";
 
-export { getHelp, getVersion };
+export { Info };

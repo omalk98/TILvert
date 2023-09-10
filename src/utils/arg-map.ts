@@ -8,6 +8,52 @@ export interface CLIArgument {
   default: boolean | string | null;
 }
 
+export default function processArguments(
+  argv: Array<string>
+): [Map<string, boolean | string | null>, string] {
+  const arg_map = new Map<string, boolean | string | null>();
+  let input = ".";
+  let lastIndex = 0;
+  CLIArgumentMap.forEach((arg: CLIArgument) => {
+    const longArgIndex = argv.indexOf(`--${arg.long_form}`);
+    const shortArgIndex = argv.indexOf(`-${arg.short_form}`);
+
+    if (longArgIndex !== -1 || shortArgIndex !== -1) {
+      // Argument found in command line, update argMap with the provided value
+      if (
+        longArgIndex !== -1 &&
+        longArgIndex + 1 < argv.length &&
+        !arg.is_flag &&
+        argv[longArgIndex + 1][0] !== "-"
+      ) {
+        arg_map.set(arg.key, argv[longArgIndex + 1]);
+
+        if (longArgIndex >= lastIndex) lastIndex = longArgIndex + 1;
+      } else if (
+        shortArgIndex !== -1 &&
+        shortArgIndex + 1 < argv.length &&
+        !arg.is_flag &&
+        argv[shortArgIndex + 1][0] !== "-"
+      ) {
+        arg_map.set(arg.key, argv[shortArgIndex + 1]);
+
+        if (shortArgIndex >= lastIndex) lastIndex = shortArgIndex + 1;
+      } else {
+        // Argument provided without a value, set it to true
+        arg_map.set(arg.key, true);
+
+        if (longArgIndex >= lastIndex || shortArgIndex >= lastIndex)
+          lastIndex = longArgIndex !== -1 ? longArgIndex : shortArgIndex;
+      }
+      // Argument not found in command line, set it to the default value
+    } else arg_map.set(arg.key, arg.default);
+  });
+
+  if (lastIndex + 1 < argv.length) input = argv[argv.length - 1];
+
+  return [arg_map, input];
+}
+
 export const CLIArgumentMap: Array<CLIArgument> = [
   {
     name: "Help",
@@ -52,41 +98,60 @@ export const CLIArgumentMap: Array<CLIArgument> = [
       "Extension for the files in the input directory. (Ignored if input is file)",
     default: "txt",
   },
+  {
+    name: "Title",
+    key: "title",
+    long_form: "title",
+    description: "Title for the generated HTML file.",
+    default: null,
+  },
+  {
+    name: "Meta Author",
+    key: "author",
+    long_form: "author",
+    description: "Author meta tag for the generated HTML file.",
+    default: null,
+  },
+  {
+    name: "Meta Description",
+    key: "description",
+    long_form: "description",
+    description: "Description meta tag for the generated HTML file.",
+    default: null,
+  },
+  {
+    name: "Meta Keywords",
+    key: "keywords",
+    long_form: "keywords",
+    description: "Keywords meta tag for the generated HTML file.",
+    default: null,
+  },
+  {
+    name: "Meta Rating",
+    key: "rating",
+    long_form: "rating",
+    description: "Rating meta tag for the generated HTML file.",
+    default: null,
+  },
+  {
+    name: "Meta Robots",
+    key: "robots",
+    long_form: "robots",
+    description: "Robots meta tag for the generated HTML file.",
+    default: null,
+  },
+  {
+    name: "Meta Generator",
+    key: "generator",
+    long_form: "generator",
+    description: "Generator meta tag for the generated HTML file.",
+    default: null,
+  },
+  {
+    name: "Meta Theme Color",
+    key: "themeColor",
+    long_form: "theme-color",
+    description: "Theme color meta tag for the generated HTML file.",
+    default: null,
+  },
 ];
-
-export default function processArguments(): [
-  Map<string, boolean | string | null>,
-  string
-] {
-  const arg_map = new Map<string, boolean | string | null>();
-  let input = "";
-  CLIArgumentMap.forEach((arg: CLIArgument) => {
-    const longArgIndex = process.argv.indexOf(`--${arg.long_form}`);
-    const shortArgIndex = process.argv.indexOf(`-${arg.short_form}`);
-
-    if (longArgIndex !== -1 || shortArgIndex !== -1) {
-      // Argument found in command line, update argMap with the provided value
-      if (
-        longArgIndex !== -1 &&
-        longArgIndex + 1 < process.argv.length &&
-        !arg.is_flag &&
-        process.argv[longArgIndex + 1][0] !== "-"
-      ) {
-        arg_map.set(arg.key, process.argv[longArgIndex + 1]);
-      } else if (
-        shortArgIndex !== -1 &&
-        shortArgIndex + 1 < process.argv.length &&
-        !arg.is_flag &&
-        process.argv[shortArgIndex + 1][0] !== "-"
-      ) {
-        arg_map.set(arg.key, process.argv[shortArgIndex + 1]);
-      } else {
-        // Argument provided without a value, set it to true
-        arg_map.set(arg.key, true);
-      }
-      // Argument not found in command line, set it to the default value
-    } else arg_map.set(arg.key, arg.default);
-  });
-
-  return [arg_map, input];
-}

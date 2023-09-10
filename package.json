@@ -6,11 +6,14 @@
   },
   "version": "0.1.0",
   "description": "Markdown to HTML CLI converter",
-  "main": "src/main.ts",
+  "main": "./dist/src/main.js",
+  "bin" : {
+    "tilvert": "./dist/src/main.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/main.js",
-    "dev": "tsc && node dist/main.js",
+    "start": "node ./dist/src/main.js",
+    "dev": "tsc && node ./dist/src/main.js",
     "build": "tsc"
   },
   "keywords": [
