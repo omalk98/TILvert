@@ -4,7 +4,7 @@
     "name": "Omar Hussein",
     "url": "https://github.com/omalk98"
   },
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Markdown to HTML CLI converter",
   "main": "./dist/src/main.js",
   "bin": {

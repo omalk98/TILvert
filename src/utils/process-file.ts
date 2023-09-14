@@ -49,6 +49,25 @@ export async function processFile(
   });
 
   segments.forEach((segment) => {
+    if (extension === "md") {
+      const markdownLinkRegex = /\[([^\]]+)\]\(([^\)]+)\)/g;
+      const markdownLinks = segment.match(markdownLinkRegex);
+
+      if (markdownLinks && markdownLinks.length > 0) {
+        markdownLinks.forEach((link) => {
+          const linkGroup = link.match(/\[([^\]]+)\]\(([^\)]+)\)/);
+
+          if (linkGroup) {
+            const anchorTag = TILvertHTMLDocument.createTag("a", linkGroup[1], {
+              href: linkGroup[2],
+              target: "_blank",
+            });
+            segment = segment.replace(linkGroup[0], anchorTag);
+          }
+        });
+      }
+    }
+
     htmlDoc.appendToBody(
       TILvertHTMLDocument.createTag("p", segment.replace(/\n|\r/, ""))
     );
