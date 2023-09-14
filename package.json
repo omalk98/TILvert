@@ -8,15 +8,20 @@
   "description": "Markdown to HTML CLI converter",
   "main": "./dist/cjs/main.js",
   "module": "./dist/main.js",
-  "bin": {
-    "tilvert": "./dist/main.js"
-  },
   "files": [
     "dist"
   ],
+  "bin": {
+    "tilvert": "./dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omalk98/TILvert.git"
+  },
+  "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./dist/cjs/main.js",
+    "start": "node ./dist/main.js",
     "dev": "tsc && node ./dist/main.js",
     "deploy": "gh-pages -d ./til",
     "build": "pnpm run build:esm && pnpm run build:cjs",
@@ -29,7 +34,6 @@
     "CLI",
     "Converter"
   ],
-  "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.5.9",
     "gh-pages": "^6.0.0",
