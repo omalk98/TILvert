@@ -6,16 +6,22 @@
   },
   "version": "0.1.2",
   "description": "Markdown to HTML CLI converter",
-  "main": "./dist/src/main.js",
+  "main": "./dist/cjs/main.js",
+  "module": "./dist/main.js",
   "bin": {
-    "tilvert": "./dist/src/main.js"
+    "tilvert": "./dist/main.js"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./dist/src/main.js",
-    "dev": "tsc && node ./dist/src/main.js",
+    "start": "node ./dist/cjs/main.js",
+    "dev": "tsc && node ./dist/main.js",
     "deploy": "gh-pages -d ./til",
-    "build": "tsc"
+    "build": "pnpm run build:esm && pnpm run build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs"
   },
   "keywords": [
     "Markdown",

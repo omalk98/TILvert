@@ -1,5 +1,4 @@
 import { CLIArgumentMap } from "../utils/arg-map";
-import { name, author, version, license } from "../../package.json";
 
 export default class Info {
   public static getHelp(): void {
@@ -29,15 +28,13 @@ export default class Info {
   }
 
   public static getVersion(): void {
-    let tilVersion = `${process.env.npm_package_name ?? name} ${
-      process.env.npm_package_version ?? version
-    }\n`;
+    let tilVersion = `${process.env.npm_package_name} ${process.env.npm_package_version}\n`;
 
     tilVersion += `${"License:".padEnd(18)}${
-      process.env.npm_package_license ?? license
+      process.env.npm_package_license
     }\n`;
     tilVersion += `${"Written by:".padEnd(18)}${
-      process.env.npm_package_author_name ?? author.name
+      process.env.npm_package_author_name
     }\n`;
 
     console.log(tilVersion);
