@@ -1,6 +1,6 @@
 # TILvert
 
-A simple tool to convert TILs from txt files to HTML.
+A simple tool to convert TILs from txt files to HTML
 
 ## Installation
 
@@ -82,7 +82,7 @@ TILvert is licensed under the [MIT License](https://mit-license.org/)
 - [x] Customizable stylesheet
 - [x] Customizable extension for input files
 - [x] Customizable output directory
-- [x] Convert markdown files to HTML (*only supports links currently*)
+- [x] Convert markdown files to HTML *(only supports links currently)*
 
 ## Examples
 
