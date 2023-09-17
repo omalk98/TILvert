@@ -8,7 +8,7 @@ import {
   rmdir,
   unlink,
 } from "fs/promises";
-import { join, resolve } from "path";
+import { join, resolve, parse, type ParsedPath } from "path";
 
 export default class FileIO {
   public static isFile = async (path: string): Promise<boolean> => {
@@ -194,5 +194,9 @@ export default class FileIO {
 
   public static resolve = (...paths: Array<string>): string => {
     return resolve(...paths);
+  };
+
+  public static parsePath = (path: string): ParsedPath => {
+    return parse(path);
   };
 }

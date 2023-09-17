@@ -5,24 +5,25 @@ export async function processFile(
   title: string = "",
   stylesheet: string | null,
   outputPath: string,
-  extension: string,
+  extension?: string,
   meta?: Array<{ key: string; value: string | boolean | null | undefined }>,
   fileOnly: boolean = false
 ) {
   const htmlDoc = new TILvertHTMLDocument();
 
   const data = await FileIO.readFile(path);
+  const parsedPath = FileIO.parsePath(path);
   if (!data) {
     console.error("Error: Unable to read file.");
     process.exit(1);
   }
   const segments = data.split(/\r?\n\r?\n/);
 
-  if (!title && segments[1].match(/^\r?\n/)) {
-    title = segments[0].replace(/\r?\n/, "");
+  if (!title && segments[1]?.match(/^\r?\n/)) {
+    title = segments[0]?.replace(/\r?\n/, "") as string;
     segments.shift();
   } else if (!title) {
-    title = path.split("/").pop()?.split(".")[0] ?? "Untitled";
+    title = parsedPath.name ?? "Untitled";
   }
   htmlDoc.appendToHead(TILvertHTMLDocument.createTag("title", title));
   htmlDoc.appendToBody(TILvertHTMLDocument.createTag("h1", title));
@@ -50,34 +51,36 @@ export async function processFile(
 
   segments.forEach((segment) => {
     if (extension === "md") {
-      const markdownLinkRegex = /\[([^\]]+)\]\(([^\)]+)\)/g;
-      const markdownLinks = segment.match(markdownLinkRegex);
+      const markdownLinkRegex = /\[([^\]]+)\]\(([^\)]+)\)/;
+      const markdownLinks = segment.match(new RegExp(markdownLinkRegex, "g"));
 
       if (markdownLinks && markdownLinks.length > 0) {
         markdownLinks.forEach((link) => {
-          const linkGroup = link.match(/\[([^\]]+)\]\(([^\)]+)\)/);
+          const linkGroup = link.match(markdownLinkRegex);
 
           if (linkGroup) {
-            const anchorTag = TILvertHTMLDocument.createTag("a", linkGroup[1], {
-              href: linkGroup[2],
+            const [mdLink, mdText, mdURL] = linkGroup;
+            const anchorTag = TILvertHTMLDocument.createTag("a", mdText, {
+              href: mdURL,
               target: "_blank",
             });
-            segment = segment.replace(linkGroup[0], anchorTag);
+            segment = segment.replace(mdLink, anchorTag);
           }
         });
       }
     }
 
-    htmlDoc.appendToBody(
-      TILvertHTMLDocument.createTag("p", segment.replace(/\n|\r/, ""))
-    );
+    htmlDoc.appendToBody(TILvertHTMLDocument.createTag("p", segment));
   });
 
   if (fileOnly) {
-    path = path.split("/").pop() as string;
+    path = parsedPath.dir as string;
   }
 
-  path = path.replace(new RegExp(`.${extension}$`, "i"), ".html");
+  path = path.replace(
+    new RegExp(`.${extension ?? parsedPath.ext.slice(1)}$`, "i"),
+    ".html"
+  );
 
   const written = await FileIO.writeFile(
     FileIO.join(outputPath, path),
@@ -132,7 +135,7 @@ export async function generateIndex(
 
     const link = TILvertHTMLDocument.createTag(
       "a",
-      file.split("/").pop()?.split(".")[0],
+      FileIO.parsePath(file).name,
       {
         href: FileIO.join(...output),
       }

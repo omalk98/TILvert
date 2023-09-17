@@ -1,3 +1,3 @@
-import Info from "./info";
+import Command from "./command";
 
-export { Info };
+export { Command };

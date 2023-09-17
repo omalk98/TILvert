@@ -5,9 +5,9 @@
     "url": "https://github.com/omalk98"
   },
   "version": "0.1.2",
-  "description": "Markdown to HTML CLI converter",
-  "main": "./dist/cjs/main.js",
-  "module": "./dist/main.js",
+  "description": "Simple Text to HTML CLI converter and SSG utility",
+  "main": "./dist/main.js",
+  "module": "./dist/cjs/main.js",
   "files": [
     "dist"
   ],
@@ -22,7 +22,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./dist/main.js",
-    "dev": "tsc && node ./dist/main.js",
+    "dev": "pnpm run build && node ./dist/main.js",
     "deploy": "gh-pages -d ./til",
     "build": "pnpm run build:esm && pnpm run build:cjs",
     "build:esm": "tsc",
@@ -39,5 +39,8 @@
     "gh-pages": "^6.0.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "commander": "^11.0.0"
   }
 }
