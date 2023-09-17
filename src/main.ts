@@ -23,15 +23,16 @@ async function main() {
       if (await FileIO.isFile(input)) {
         console.log(`Input File: ${FileIO.resolve(input)}`);
 
-        await processFile(
-          input,
-          options.title,
-          options.stylesheet,
-          options.output,
-          options.extension,
+        await processFile({
+          path: input,
+          title: options.title,
+          stylesheet: options.stylesheet,
+          outputPath: options.output,
+          extension: options.extension,
+          language: options.language,
           meta,
-          true
-        );
+          fileOnly: true,
+        });
       } else if (await FileIO.isDirectory(input)) {
         console.log(`Input Directory: ${FileIO.resolve(input)}`);
 
@@ -41,14 +42,15 @@ async function main() {
         );
 
         for (let i = 0; i < files.length; i++) {
-          await processFile(
-            files[i] as string,
-            options.title,
-            options.stylesheet,
-            options.output,
-            options.extension,
-            meta
-          );
+          await processFile({
+            path: files[i] as string,
+            title: options.title,
+            stylesheet: options.stylesheet,
+            outputPath: options.output,
+            extension: options.extension,
+            language: options.language,
+            meta,
+          });
         }
       } else {
         console.error(`Error: Unable to read file/folder. <${input}>`);
@@ -57,7 +59,12 @@ async function main() {
     })
   );
 
-  generateIndex(options.output, options.stylesheet, meta);
+  generateIndex({
+    outputDirectory: options.output,
+    stylesheet: options.stylesheet,
+    language: options.language,
+    meta,
+  });
   console.log(`Output directory: ${FileIO.resolve(options.output)}`);
 }
 

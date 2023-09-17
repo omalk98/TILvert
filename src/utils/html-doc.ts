@@ -26,12 +26,14 @@ export default class TILvertHTMLDocument {
   private static baseHTML({
     head,
     body,
+    language,
   }: {
     head: Array<string>;
     body: Array<string>;
+    language: string;
   }): string {
     return `<!DOCTYPE html>
-<html lang="en">
+<html lang="${language}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,10 +54,11 @@ ${body.join("")}
     this.body.push(content);
   }
 
-  public renderHTML(): string {
+  public renderHTML(language?: string): string {
     return TILvertHTMLDocument.baseHTML({
       head: this.head,
       body: this.body,
+      language: language || "en-CA",
     });
   }
 

@@ -1,14 +1,24 @@
 import { FileIO, TILvertHTMLDocument } from "./index";
 
-export async function processFile(
-  path: string,
-  title: string = "",
-  stylesheet: string | null,
-  outputPath: string,
-  extension?: string,
-  meta?: Array<{ key: string; value: string | boolean | null | undefined }>,
-  fileOnly: boolean = false
-) {
+export async function processFile({
+  path,
+  title = "",
+  stylesheet,
+  outputPath,
+  language,
+  extension,
+  meta,
+  fileOnly = false,
+}: {
+  path: string;
+  title: string;
+  stylesheet: string | null;
+  outputPath: string;
+  language: string;
+  extension?: string;
+  meta?: Array<{ key: string; value: string | boolean | null | undefined }>;
+  fileOnly?: boolean;
+}) {
   const htmlDoc = new TILvertHTMLDocument();
 
   const data = await FileIO.readFile(path);
@@ -84,7 +94,7 @@ export async function processFile(
 
   const written = await FileIO.writeFile(
     FileIO.join(outputPath, path),
-    htmlDoc.renderHTML()
+    htmlDoc.renderHTML(language)
   );
 
   if (!written) {
@@ -94,11 +104,17 @@ export async function processFile(
   }
 }
 
-export async function generateIndex(
-  outputDirectory: string,
-  stylesheet: string | null,
-  meta?: Array<{ key: string; value: string | boolean | null | undefined }>
-) {
+export async function generateIndex({
+  outputDirectory,
+  stylesheet,
+  language,
+  meta,
+}: {
+  outputDirectory: string;
+  stylesheet: string | null;
+  language: string;
+  meta?: Array<{ key: string; value: string | boolean | null | undefined }>;
+}) {
   const htmlDoc = new TILvertHTMLDocument();
 
   htmlDoc.appendToHead(TILvertHTMLDocument.createTag("title", "TILvert Index"));
@@ -151,7 +167,7 @@ export async function generateIndex(
 
   const written = await FileIO.writeFile(
     FileIO.join(...outDir, "index.html"),
-    htmlDoc.renderHTML()
+    htmlDoc.renderHTML(language)
   );
 
   if (!written) {
