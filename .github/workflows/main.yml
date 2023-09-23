@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.TOKEN }}
       - uses: pnpm/action-setup@v2
         with:
           version: 7
@@ -24,5 +26,5 @@ jobs:
           git config user.name "Omar Hussein"
           git checkout -b release
           git add -f dist/ package.json
-          git commit -m "Create release branch with built files and package.json"
+          git commit -m "Create release branch"
           git push origin release
