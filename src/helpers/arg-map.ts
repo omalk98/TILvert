@@ -44,7 +44,7 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     short_form: "l",
     description: "Language used for HTML lang attribute.",
     value: "string",
-    default: "",
+    default: "en-CA",
   },
   {
     name: "Title",

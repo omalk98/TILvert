@@ -1,6 +1,5 @@
 first paragraph with title.
 
-
 second paragraph.
 should be same as 2.
 
@@ -12,4 +11,12 @@ fourth paragraph has a link in the end of the paragraph [Github](https://github.
 
 [Github](https://github.com/) sixth paragraph has lots of [Github](https://github.com/) links within itself [Github](https://github.com/)
 
+this seventh paragraph has an inline code block `alert("Hello World!");` in the middle of the paragraph!
+
 [Github](https://github.com/)
+
+```javascript
+var s = "JavaScript syntax highlighting";
+console.log(s);
+alert(s);
+```

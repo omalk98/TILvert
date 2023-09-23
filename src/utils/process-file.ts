@@ -8,7 +8,6 @@ export async function processFile({
   language,
   extension,
   meta,
-  fileOnly = false,
 }: {
   path: string;
   title: string;
@@ -83,23 +82,18 @@ export async function processFile({
     htmlDoc.appendToBody(TILvertHTMLDocument.createTag("p", segment));
   });
 
-  if (fileOnly) {
-    path = parsedPath.dir as string;
-  }
-
-  path = path.replace(
-    new RegExp(`.${extension ?? parsedPath.ext.slice(1)}$`, "i"),
-    ".html"
-  );
-
+  htmlDoc.setLanguage(language);
   const written = await FileIO.writeFile(
-    FileIO.join(outputPath, path),
-    htmlDoc.renderHTML(language)
+    FileIO.join(outputPath, `${parsedPath.name}.html`),
+    htmlDoc.renderHTML()
   );
 
   if (!written) {
     console.error(
-      `Error: Unable to write file. ${FileIO.join(outputPath, path)}`
+      `Error: Unable to write file. ${FileIO.join(
+        outputPath,
+        `${parsedPath.name}.html`
+      )}`
     );
   }
 }
@@ -165,9 +159,10 @@ export async function generateIndex({
   const outDir = outputDirectory.split("/");
   outDir.shift();
 
+  htmlDoc.setLanguage(language);
   const written = await FileIO.writeFile(
     FileIO.join(...outDir, "index.html"),
-    htmlDoc.renderHTML(language)
+    htmlDoc.renderHTML()
   );
 
   if (!written) {
