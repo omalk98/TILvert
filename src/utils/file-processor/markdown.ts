@@ -44,6 +44,23 @@ export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
     return text;
   }
 
+  protected convertBold(text: string): string {
+    const markdownBoldRegex = /\*\*([^\*]+)\*\*/;
+    const markdownBoldList = text.match(new RegExp(markdownBoldRegex, "g"));
+    if (markdownBoldList && markdownBoldList.length > 0) {
+      markdownBoldList.forEach((bold) => {
+        const boldGroup = bold.match(markdownBoldRegex);
+
+        if (boldGroup) {
+          const [mdBold, mdText] = boldGroup;
+          const boldTag = TILvertHTMLDocument.createTag("strong", mdText);
+          text = text.replace(mdBold, boldTag);
+        }
+      });
+    }
+    return text;
+  }
+
   protected convertInlineCodeBlocks(text: string): string {
     const markdownInlineCodeBlockRegex = /`([^`]+)`/;
     const markdownInlineCodeBlocks = text.match(
@@ -91,6 +108,7 @@ export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
     segments.forEach((segment) => {
       segment = this.convertLinks(segment);
       segment = this.convertInlineCodeBlocks(segment);
+      segment = this.convertBold(segment);
       htmlDocument.appendToBody(TILvertHTMLDocument.createTag("p", segment));
     });
     return htmlDocument;
