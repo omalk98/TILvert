@@ -99,12 +99,17 @@ async function main() {
     })
   );
 
-  generateIndex({
-    outputDirectory: options.output,
-    stylesheet: options.stylesheet,
-    language: options.language,
-    meta,
+  const index = new TILvertHTMLDocument();
+  index.setTitle(options.title);
+  index.setLanguage(options.language);
+  index.addStylesheet(options.stylesheet);
+  meta.forEach((tag) => {
+    if (tag.value) {
+      index.appendMetaTag(tag.key, tag.value);
+    }
   });
+
+  generateIndex(options.output, index);
   console.log(`Output directory: ${FileIO.resolve(options.output)}`);
 }
 

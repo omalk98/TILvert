@@ -8,9 +8,11 @@ import {
   rmdir,
   unlink,
 } from "fs/promises";
-import { join, resolve, parse, type ParsedPath } from "path";
+import { join, resolve, parse, sep, type ParsedPath } from "path";
 
 export default class FileIO {
+  public static readonly separator = sep;
+
   public static isFile = async (path: string): Promise<boolean> => {
     try {
       const stats = await stat(path);
