@@ -44,6 +44,23 @@ export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
     return text;
   }
 
+  protected convertItalic(text: string): string {
+    const markdownItalicRegex = /_([^_]+)_/;
+    const markdownItalicList = text.match(new RegExp(markdownItalicRegex, "g"));
+    if (markdownItalicList && markdownItalicList.length > 0) {
+      markdownItalicList.forEach((italic) => {
+        const italicGroup = italic.match(markdownItalicRegex);
+
+        if (italicGroup) {
+          const [mdItalic, mdText] = italicGroup;
+          const italicTag = TILvertHTMLDocument.createTag("em", mdText);
+          text = text.replace(mdItalic, italicTag);
+        }
+      });
+    }
+    return text;
+  }
+
   protected convertBold(text: string): string {
     const markdownBoldRegex = /\*\*([^\*]+)\*\*/;
     const markdownBoldList = text.match(new RegExp(markdownBoldRegex, "g"));
@@ -108,6 +125,7 @@ export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
     segments.forEach((segment) => {
       segment = this.convertLinks(segment);
       segment = this.convertInlineCodeBlocks(segment);
+      segment = this.convertItalic(segment);
       segment = this.convertBold(segment);
       htmlDocument.appendToBody(TILvertHTMLDocument.createTag("p", segment));
     });
