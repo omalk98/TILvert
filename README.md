@@ -5,7 +5,7 @@ A simple tool to convert TILs from txt files to HTML
 ## Installation
 
 ```bash
-$ npm install -g https://github.com/omalk98/TILvert.git
+$ npm install -g https://github.com/omalk98/TILvert.git#release
 ```
 
 ## Uninstall
@@ -82,7 +82,12 @@ TILvert is licensed under the [MIT License](https://mit-license.org/)
 - [x] Customizable stylesheet
 - [x] Customizable extension for input files
 - [x] Customizable output directory
-- [x] Convert markdown files to HTML *(only supports links currently)*
+- [x] Convert markdown files to HTML
+
+#### Markdown Support
+
+- [x] Links
+- [x] Code Blocks
 
 ## Examples
 

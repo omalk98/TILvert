@@ -1,10 +1,5 @@
 #!/usr/bin/env node
-import {
-  processFile,
-  generateIndex,
-  FileIO,
-  TILvertHTMLDocument,
-} from "./utils";
+import { generateIndex, FileIO, TILvertHTMLDocument } from "./utils";
 import {
   FileProcessor,
   TextProcessingStrategy,
@@ -16,12 +11,7 @@ async function main() {
   Command.parse(process.argv);
   const options = Command.opts();
   const inputList = Command.args;
-  const htmlDoc = new TILvertHTMLDocument();
-  const processor = new FileProcessor(htmlDoc);
-
-  htmlDoc.setTitle(options.title);
-  htmlDoc.setLanguage(options.language);
-  htmlDoc.addStylesheet(options.stylesheet);
+  const processor = new FileProcessor();
 
   const meta = [
     { key: "author", value: options.author },
@@ -32,11 +22,6 @@ async function main() {
     { key: "generator", value: options.generator },
     { key: "theme-color", value: options.themeColor },
   ];
-  meta.forEach((tag) => {
-    if (tag.value) {
-      htmlDoc.appendMetaTag(tag.key, tag.value);
-    }
-  });
 
   await Promise.all(
     inputList.map(async (input) => {
@@ -56,6 +41,7 @@ async function main() {
         console.error(`Error: Unable to read file/folder. <${input}>`);
         return;
       }
+      console.log(files);
 
       switch (extension) {
         case ".txt":
@@ -73,6 +59,18 @@ async function main() {
 
       await Promise.all(
         files.map(async (file) => {
+          const htmlDoc = new TILvertHTMLDocument();
+          htmlDoc.setTitle(options.title);
+          htmlDoc.setLanguage(options.language);
+          htmlDoc.addStylesheet(options.stylesheet);
+          meta.forEach((tag) => {
+            if (tag.value) {
+              htmlDoc.appendMetaTag(tag.key, tag.value);
+            }
+          });
+
+          processor.setHTMLDocument(htmlDoc);
+
           const parsedPath = FileIO.parsePath(file);
           const data = await FileIO.readFile(file);
 
@@ -84,18 +82,17 @@ async function main() {
 
           processor.process(data);
 
-          const written = await FileIO.writeFile(
-            FileIO.join(options.output, `${parsedPath.name}.html`),
-            htmlDoc.renderHTML()
-          );
-
-          if (!written) {
-            console.error(
-              `Error: Unable to write file. ${FileIO.join(
+          const outDir = isDirectory
+            ? FileIO.join(
                 options.output,
+                parsedPath.dir,
                 `${parsedPath.name}.html`
-              )}`
-            );
+              )
+            : FileIO.join(options.output, `${parsedPath.name}.html`);
+
+          const written = await FileIO.writeFile(outDir, htmlDoc.renderHTML());
+          if (!written) {
+            console.error(`Error: Unable to write file. ${outDir}`);
           }
         })
       );

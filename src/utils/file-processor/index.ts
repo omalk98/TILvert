@@ -39,11 +39,11 @@ export class FileProcessingStrategy implements IFileProcessor {
 }
 
 export class FileProcessor implements IFileProcessor {
-  private HTMLDocument: TILvertHTMLDocument;
+  private HTMLDocument: TILvertHTMLDocument | undefined;
   private ProcessingStrategy: IFileProcessor;
 
-  constructor(document: TILvertHTMLDocument, processor?: IFileProcessor) {
-    this.HTMLDocument = document;
+  constructor(document?: TILvertHTMLDocument, processor?: IFileProcessor) {
+    this.HTMLDocument = document || undefined;
     this.ProcessingStrategy = processor || new FileProcessingStrategy();
   }
 
@@ -51,7 +51,15 @@ export class FileProcessor implements IFileProcessor {
     this.ProcessingStrategy = processor;
   }
 
+  public setHTMLDocument(document: TILvertHTMLDocument): void {
+    this.HTMLDocument = document;
+  }
+
   public process(data: string): TILvertHTMLDocument {
+    if (!this.HTMLDocument) {
+      console.error("Error: HTMLDocument is undefined.");
+      process.exit(1);
+    }
     return this.ProcessingStrategy.process(data, this.HTMLDocument);
   }
 }
