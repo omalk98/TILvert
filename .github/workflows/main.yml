@@ -7,11 +7,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 7
+
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
+
       - name: Build
         run: pnpm run build
+
+      - name: Create release branch
+        run: |
+          git checkout -b release
+          git add -f dist/ package.json
+          git commit -m "Create release branch with built files and package.json"
+          git push origin release
