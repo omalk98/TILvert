@@ -60,6 +60,7 @@ If no path is specified, TILvert will read the current directory recursively to 
 | -e, --extension  | Extension for the files in the input directory. (Ignored if input is file). Default (txt). |
 | -o, --output     | Path to the output directory. Default (./til).                                             |
 | -s, --stylesheet | Path to the stylesheet.                                                                    |
+| -l, --language   | Language of the HTML page.                                                                 |
 | --title          | Title of the HTML page.                                                                    |
 | --author         | Author of the HTML page.                                                                   |
 | --description    | Description of the HTML page.                                                              |
@@ -77,6 +78,7 @@ TILvert is licensed under the [MIT License](https://mit-license.org/)
 - [x] Convert txt files to HTML
 - [x] Replicate directory structure in output directory
 - [x] Non-destructive (Does not delete files in output directory)
+- [x] Customizable language
 - [x] Customizable HTML page title
 - [x] Customizable HTML page with meta tags
 - [x] Customizable stylesheet
@@ -87,7 +89,10 @@ TILvert is licensed under the [MIT License](https://mit-license.org/)
 #### Markdown Support
 
 - [x] Links
+- [x] Italics
+- [x] Bold
 - [x] Code Blocks
+- [x] Horizontal Rules
 
 ## Examples
 
