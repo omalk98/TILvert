@@ -57,45 +57,44 @@ async function main() {
         default:
       }
 
-      await Promise.all(
-        files.map(async (file) => {
-          const htmlDoc = new TILvertHTMLDocument();
-          htmlDoc.setTitle(options.title);
-          htmlDoc.setLanguage(options.language);
-          htmlDoc.addStylesheet(options.stylesheet);
-          meta.forEach((tag) => {
-            if (tag.value) {
-              htmlDoc.appendMetaTag(tag.key, tag.value);
-            }
-          });
-
-          processor.setHTMLDocument(htmlDoc);
-
-          const parsedPath = FileIO.parsePath(file);
-          const data = await FileIO.readFile(file);
-
-          if (!data) {
-            console.error("Error: Unable to read file.");
-            if (!isDirectory) process.exit(1);
-            else return;
+      for (let i = 0; i < files.length; ++i) {
+        const htmlDoc = new TILvertHTMLDocument();
+        htmlDoc.setTitle(options.title);
+        htmlDoc.setLanguage(options.language);
+        htmlDoc.addStylesheet(options.stylesheet);
+        meta.forEach((tag) => {
+          if (tag.value) {
+            htmlDoc.appendMetaTag(tag.key, tag.value);
           }
+        });
 
-          processor.process(data);
+        processor.setHTMLDocument(htmlDoc);
 
-          const outDir = isDirectory
-            ? FileIO.join(
-                options.output,
-                parsedPath.dir,
-                `${parsedPath.name}.html`
-              )
-            : FileIO.join(options.output, `${parsedPath.name}.html`);
+        const parsedPath = FileIO.parsePath(files[i] as string);
+        const data = await FileIO.readFile(files[i] as string);
 
-          const written = await FileIO.writeFile(outDir, htmlDoc.renderHTML());
-          if (!written) {
-            console.error(`Error: Unable to write file. ${outDir}`);
-          }
-        })
-      );
+        if (!data) {
+          console.error("Error: Unable to read file.");
+          if (!isDirectory) process.exit(1);
+          else return;
+        }
+
+        processor.process(data);
+
+        const outDir = isDirectory
+          ? FileIO.join(
+              options.output,
+              parsedPath.dir,
+              `${parsedPath.name}.html`
+            )
+          : FileIO.join(options.output, `${parsedPath.name}.html`);
+
+        const written = await FileIO.writeFile(outDir, htmlDoc.renderHTML());
+        if (!written) {
+          console.error(`Error: Unable to write file. ${outDir}`);
+        }
+      }
+      // await Promise.all(files.map(async (file) => {}));
     })
   );
 
