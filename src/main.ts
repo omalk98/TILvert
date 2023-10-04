@@ -6,12 +6,33 @@ import {
   MarkdownProcessingStrategy,
 } from "./utils/file-processor";
 import { Command } from "./helpers";
+import toml from "toml";
 
 async function main() {
   Command.parse(process.argv);
   const options = Command.opts();
   const inputList = Command.args;
   const processor = new FileProcessor();
+
+  // check if config flag is used
+  if (options.config) {
+    // Read the configuration file
+    const configData = await FileIO.readFile(options.config);
+    if (!configData) {
+      console.error("Error: Unable to read configuration file.");
+      process.exit(1);
+    }
+
+    // parse the configuration file
+    const config = toml.parse(configData);
+
+    // override the options with the configuration file
+    Object.keys(config).forEach((key) => {
+      if (key in options) {
+        options[key] = config[key];
+      }
+    });
+  }
 
   const meta = [
     { key: "author", value: options.author },
