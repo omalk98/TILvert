@@ -94,7 +94,6 @@ async function main() {
           console.error(`Error: Unable to write file. ${outDir}`);
         }
       }
-      // await Promise.all(files.map(async (file) => {}));
     })
   );
 

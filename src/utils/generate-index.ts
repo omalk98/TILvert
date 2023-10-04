@@ -9,7 +9,7 @@ export default async function generateIndex(
   const files = await FileIO.readDirectoryRecursive(outputDirectory, "html");
 
   const list = files.reduce((accumulator, file) => {
-    const output = file.split("/");
+    const output = file.split(FileIO.separator);
     output.shift();
 
     const link = TILvertHTMLDocument.createTag(
@@ -25,9 +25,7 @@ export default async function generateIndex(
 
   htmlDoc.appendToBody(TILvertHTMLDocument.createTag("ul", list));
 
-  const indexOutDir = outputDirectory.split(FileIO.separator);
-  indexOutDir.shift();
-  outputDirectory = FileIO.join(...indexOutDir, "index.html");
+  outputDirectory = FileIO.join(outputDirectory, "index.html")
 
   const written = await FileIO.writeFile(outputDirectory, htmlDoc.renderHTML());
 

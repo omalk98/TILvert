@@ -34,7 +34,7 @@ $ tilvert [flags/options] <path>
 ### From Source
 
 ```bash
-$ node dist/src/main.js [flags/options] <path>
+$ node dist/main.js [flags/options] <path>
 ```
 
 OR
@@ -105,6 +105,6 @@ $ tilvert -e txt -o ./til -s https://cdn.jsdelivr.net/npm/water.css@2/out/water.
 ### From Source
 
 ```bash
-$ node dist/src/main.js --extension txt --output ./til --stylesheet https://cdn.jsdelivr.net/npm/water.css@2/out/water.css
+$ node dist/main.js --extension txt --output ./til --stylesheet https://cdn.jsdelivr.net/npm/water.css@2/out/water.css
 $ npm run start -- --extension txt --output ./til --stylesheet https://cdn.jsdelivr.net/npm/water.css@2/out/water.css
 ```
