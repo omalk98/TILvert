@@ -10,6 +10,15 @@ export interface CLIArgument {
 
 export const CLIArgumentMap: Array<CLIArgument> = [
   {
+    name: "Configuration",
+    key: "config",
+    long_form: "config",
+    short_form: "c",
+    description: "Path to configuration file.",
+    value: "path",
+    default: "",
+  },
+  {
     name: "Output",
     key: "outputDirectory",
     long_form: "output",
