@@ -81,7 +81,7 @@ async function main() {
       for (let i = 0; i < files.length; ++i) {
         const htmlDoc = new TILvertHTMLDocument();
         htmlDoc.setTitle(options.title);
-        htmlDoc.setLanguage(options.language);
+        htmlDoc.setLanguage(options.lang);
         htmlDoc.addStylesheet(options.stylesheet);
         meta.forEach((tag) => {
           if (tag.value) {
