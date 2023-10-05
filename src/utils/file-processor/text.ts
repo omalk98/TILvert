@@ -20,7 +20,7 @@ export default class TextProcessingStrategy extends FileProcessingStrategy {
     htmlDocument: TILvertHTMLDocument
   ): TILvertHTMLDocument {
     const segments = this.split(data);
-    if (htmlDocument.getTitle() === "") {
+    if (!htmlDocument.getTitle()) {
       const title = this.extractTitle(segments);
       htmlDocument.setTitle(title);
     }

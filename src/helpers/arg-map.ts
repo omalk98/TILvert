@@ -5,7 +5,7 @@ export interface CLIArgument {
   short_form?: string;
   description: string;
   value?: string;
-  default: string;
+  default?: string;
 }
 
 export const CLIArgumentMap: Array<CLIArgument> = [
@@ -16,7 +16,6 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     short_form: "c",
     description: "Path to configuration file.",
     value: "path",
-    default: "",
   },
   {
     name: "Output",
@@ -34,7 +33,6 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     short_form: "s",
     description: "Path to the stylesheet.",
     value: "path",
-    default: "",
   },
   {
     name: "Extension",
@@ -53,7 +51,7 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     short_form: "l",
     description: "Language used for HTML lang attribute.",
     value: "string",
-    default: "en-CA",
+    default: "en",
   },
   {
     name: "Title",
@@ -61,7 +59,6 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     long_form: "title",
     description: "Title for the generated HTML file.",
     value: "string",
-    default: "",
   },
   {
     name: "Meta Author",
@@ -69,7 +66,6 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     long_form: "author",
     description: "Author meta tag for the generated HTML file.",
     value: "string",
-    default: "",
   },
   {
     name: "Meta Description",
@@ -77,7 +73,6 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     long_form: "description",
     description: "Description meta tag for the generated HTML file.",
     value: "string",
-    default: "",
   },
   {
     name: "Meta Keywords",
@@ -85,7 +80,6 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     long_form: "keywords",
     description: "Keywords meta tag for the generated HTML file.",
     value: "string",
-    default: "",
   },
   {
     name: "Meta Rating",
@@ -93,7 +87,6 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     long_form: "rating",
     description: "Rating meta tag for the generated HTML file.",
     value: "string",
-    default: "",
   },
   {
     name: "Meta Robots",
@@ -101,7 +94,6 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     long_form: "robots",
     description: "Robots meta tag for the generated HTML file.",
     value: "string",
-    default: "",
   },
   {
     name: "Meta Generator",
@@ -109,7 +101,6 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     long_form: "generator",
     description: "Generator meta tag for the generated HTML file.",
     value: "string",
-    default: "",
   },
   {
     name: "Meta Theme Color",
@@ -117,6 +108,5 @@ export const CLIArgumentMap: Array<CLIArgument> = [
     long_form: "theme-color",
     description: "Theme color meta tag for the generated HTML file.",
     value: "string",
-    default: "",
   },
 ];

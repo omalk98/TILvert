@@ -117,7 +117,7 @@ export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
     data = this.convertHr(data);
 
     const segments = this.split(data);
-    if (htmlDocument.getTitle() === "") {
+    if (!htmlDocument.getTitle()) {
       const title = this.extractTitle(segments);
       htmlDocument.setTitle(title);
     }

@@ -9,6 +9,10 @@ import { Command } from "./helpers";
 import toml from "toml";
 
 async function main() {
+  if (process.argv.length < 3) {
+    Command.outputHelp();
+    process.exit(1);
+  }
   Command.parse(process.argv);
   const options = Command.opts();
   const inputList = Command.args;
@@ -120,7 +124,7 @@ async function main() {
 
   const index = new TILvertHTMLDocument();
   index.setTitle(options.title);
-  index.setLanguage(options.language);
+  index.setLanguage(options.lang);
   index.addStylesheet(options.stylesheet);
   meta.forEach((tag) => {
     if (tag.value) {

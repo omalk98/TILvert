@@ -4,7 +4,7 @@
     "name": "Omar Hussein",
     "url": "https://github.com/omalk98"
   },
-  "version": "0.1.5",
+  "version": "0.1.8",
   "description": "Simple Text to HTML CLI converter and SSG utility",
   "main": "./dist/main.js",
   "module": "./dist/cjs/main.js",
