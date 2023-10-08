@@ -1,3 +1,3 @@
-import Command from "./command";
+import CLICommand from "./command";
 
-export { Command };
+export { CLICommand };

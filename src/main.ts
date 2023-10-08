@@ -5,38 +5,17 @@ import {
   TextProcessingStrategy,
   MarkdownProcessingStrategy,
 } from "./utils/file-processor";
-import { Command } from "./helpers";
-import toml from "toml";
+import { CLICommand } from "./helpers";
 
 async function main() {
+  const Command = CLICommand.getInstance();
   if (process.argv.length < 3) {
     Command.outputHelp();
     process.exit(1);
   }
-  Command.parse(process.argv);
-  const options = Command.opts();
-  const inputList = Command.args;
+  const options = Command.getOptions();
+  const inputList = Command.getArguments();
   const processor = new FileProcessor();
-
-  // check if config flag is used
-  if (options.config) {
-    // Read the configuration file
-    const configData = await FileIO.readFile(options.config);
-    if (!configData) {
-      console.error("Error: Unable to read configuration file.");
-      process.exit(1);
-    }
-
-    // parse the configuration file
-    const config = toml.parse(configData);
-
-    // override the options with the configuration file
-    Object.keys(config).forEach((key) => {
-      if (key in options) {
-        options[key] = config[key];
-      }
-    });
-  }
 
   const meta = [
     { key: "author", value: options.author },
@@ -59,14 +38,14 @@ async function main() {
         files.push(input);
         isDirectory = false;
       } else if (await FileIO.isDirectory(input)) {
-        console.log(`Input Directory: ${FileIO.resolve(input)}`);
-        files = await FileIO.readDirectoryRecursive(input, extension);
         isDirectory = true;
+        files = await FileIO.getFiles(input, extension);
+        console.log(`Input Directory: ${FileIO.resolve(input)}`);
+        console.log("Input Files", files);
       } else {
         console.error(`Error: Unable to read file/folder. <${input}>`);
         return;
       }
-      console.log(files);
 
       switch (extension) {
         case ".txt":
