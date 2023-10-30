@@ -2,22 +2,24 @@ import { FileIO, TILvertHTMLDocument } from "./index";
 
 export default async function generateIndex(
   outputDirectory: string,
-  htmlDoc: TILvertHTMLDocument
+  htmlDoc: TILvertHTMLDocument,
+  links?: Array<string>
 ) {
   await FileIO.deleteFile(FileIO.join(outputDirectory, "index.html"));
 
-  const files = await FileIO.getFiles(outputDirectory, "html");
+  if (!links) {
+    links = (await FileIO.getFiles(outputDirectory, "html")).map((file) => {
+      const segments = FileIO.split(file);
+      segments.shift();
+      return FileIO.join(...segments);
+    });
+  }
 
-  const list = files.reduce((accumulator, file) => {
-    const output = FileIO.split(file);
-    output.shift();
-
+  const list = links.reduce((accumulator, file) => {
     const link = TILvertHTMLDocument.createTag(
       "a",
       FileIO.parsePath(file).name,
-      {
-        href: FileIO.join(...output),
-      }
+      { href: file }
     );
     const listItem = TILvertHTMLDocument.createTag("li", link);
     return `${accumulator}${listItem}`;

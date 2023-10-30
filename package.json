@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "commander": "^11.0.0",
-    "rimraf": "^5.0.5"
+    "rimraf": "^5.0.5",
+    "sitemap": "^7.1.1"
   }
 }
