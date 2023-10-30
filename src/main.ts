@@ -1,5 +1,10 @@
 #!/usr/bin/env node
-import { generateIndex, FileIO, TILvertHTMLDocument } from "./utils";
+import {
+  generateIndex,
+  generateSitemap,
+  FileIO,
+  TILvertHTMLDocument,
+} from "./utils";
 import {
   FileProcessor,
   TextProcessingStrategy,
@@ -111,7 +116,18 @@ async function main() {
     }
   });
 
-  generateIndex(options.output, index);
+  const links = (await FileIO.getFiles(options.output, "html")).map((file) => {
+    const segments = FileIO.split(file);
+    segments.shift();
+    return FileIO.join(...segments);
+  });
+
+  await generateIndex(options.output, index, links);
+  await generateSitemap(
+    options.output,
+    links.map((link) => ({ url: link }))
+  );
+
   console.log(`Output directory: ${FileIO.resolve(options.output)}`);
 }
 
