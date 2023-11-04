@@ -31,7 +31,8 @@
     "lint:fix": "pnpm run lint -- --fix || npm run lint -- --fix",
     "prettier": "prettier src --check",
     "prettier:fix": "pnpm run prettier -- --write || npm run prettier -- --write",
-    "format": "(pnpm run prettier:fix && pnpm run lint:fix) || (npm run prettier:fix && npm run lint:fix)"
+    "format": "(pnpm run prettier:fix && pnpm run lint:fix) || (npm run prettier:fix && npm run lint:fix)",
+    "prepare": "husky install"
   },
   "keywords": [
     "Markdown",
@@ -49,6 +50,7 @@
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-promise": "6.0.0",
     "gh-pages": "^6.0.0",
+    "husky": "^8.0.3",
     "prettier": "^3.0.3",
     "toml": "^3.0.0",
     "typescript": "^5.2.2"
