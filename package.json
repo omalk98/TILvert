@@ -26,7 +26,12 @@
     "deploy": "gh-pages -d ./til",
     "build": "(pnpm run build:esm && pnpm run build:cjs) || (npm run build:esm && npm run build:cjs)",
     "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --outDir dist/cjs"
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "lint": "eslint src/**/*.{js,ts,mjs}",
+    "lint:fix": "pnpm run lint -- --fix || npm run lint -- --fix",
+    "prettier": "prettier src --check",
+    "prettier:fix": "pnpm run prettier -- --write || npm run prettier -- --write",
+    "format": "(pnpm run prettier:fix && pnpm run lint:fix) || (npm run prettier:fix && npm run lint:fix)"
   },
   "keywords": [
     "Markdown",
@@ -36,6 +41,13 @@
   ],
   "devDependencies": {
     "@types/node": "^20.5.9",
+    "@typescript-eslint/eslint-plugin": "6.4.0",
+    "eslint": "8.0.1",
+    "eslint-config-standard-with-typescript": "^39.1.1",
+    "eslint-plugin-import": "2.25.2",
+    "eslint-plugin-n": "16.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-promise": "6.0.0",
     "gh-pages": "^6.0.0",
     "prettier": "^3.0.3",
     "toml": "^3.0.0",

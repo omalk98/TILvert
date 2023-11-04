@@ -1,4 +1,4 @@
-import { SitemapStream, streamToPromise, SitemapItemLoose } from "sitemap";
+import { SitemapStream, streamToPromise, type SitemapItemLoose } from "sitemap";
 import { Readable } from "stream";
 import { FileIO } from "./index";
 
@@ -10,18 +10,20 @@ const stream = new SitemapStream({
 // Return a promise that resolves with your XML string
 export default async function generateSitemap(
   outputDirectory: string,
-  links?: Array<SitemapItemLoose>
+  links?: SitemapItemLoose[]
 ): Promise<void> {
-  if (!links) {
+  if (links !== undefined && links !== null) {
     links = (await FileIO.getFiles(outputDirectory, "html")).map((file) => {
       const segments = FileIO.split(file);
       segments.shift();
       return { url: FileIO.join(...segments) };
     });
   }
-  const sitemap = await streamToPromise(Readable.from(links).pipe(stream)).then(
-    (data) => data.toString()
-  );
+  const sitemap = await streamToPromise(
+    Readable.from(links ?? [])
+      .pipe(stream)
+      .on("error", console.error)
+  ).then((data) => data.toString());
 
   outputDirectory = FileIO.join(outputDirectory, "sitemap.xml");
   const written = await FileIO.writeFile(outputDirectory, sitemap);

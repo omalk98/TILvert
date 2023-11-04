@@ -3,6 +3,7 @@ import { stat, mkdir, writeFile, readFile, readdir, unlink } from "fs/promises";
 import { join, resolve, parse, sep, type ParsedPath } from "path";
 import { rimraf } from "rimraf";
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export default class FileIO {
   public static readonly separator = sep;
 
@@ -56,7 +57,7 @@ export default class FileIO {
     data: string
   ): Promise<boolean> => {
     try {
-      let tmp = FileIO.split(path);
+      const tmp = FileIO.split(path);
       tmp.pop();
       await this.mkdirIfNotExists(join(...tmp));
 
@@ -89,17 +90,16 @@ export default class FileIO {
   public static getFiles = async (
     path: string,
     extension?: string
-  ): Promise<Array<string>> => {
+  ): Promise<string[]> => {
     try {
       const entries = await readdir(path, { withFileTypes: true });
       const files = await Promise.all(
+        // eslint-disable-next-line @typescript-eslint/promise-function-async
         entries.map((file) => {
           const res = join(path, file.name);
-          return file.isDirectory()
-            ? this.getFiles(res, extension)
-            : res.endsWith(`.${extension}`)
-            ? res
-            : [];
+          if (file.isDirectory()) return this.getFiles(res, extension);
+
+          return res.endsWith(`.${extension}`) ? res : [];
         })
       );
       return Array.prototype.concat(...files);
@@ -109,11 +109,11 @@ export default class FileIO {
     }
   };
 
-  public static join(...paths: Array<string>): string {
+  public static join(...paths: string[]): string {
     return join(...paths);
   }
 
-  public static resolve(...paths: Array<string>): string {
+  public static resolve(...paths: string[]): string {
     return resolve(...paths);
   }
 
@@ -121,7 +121,7 @@ export default class FileIO {
     return parse(path);
   }
 
-  public static split(path: string): Array<string> {
+  public static split(path: string): string[] {
     return path.split(this.separator);
   }
 }

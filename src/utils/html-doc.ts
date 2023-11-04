@@ -1,9 +1,9 @@
 export default class TILvertHTMLDocument {
-  private head: Array<string>;
-  private body: Array<string>;
+  private readonly head: string[];
+  private readonly body: string[];
   private title: string;
   private language: string;
-  private meta: Array<string>;
+  private readonly meta: string[];
   private static readonly self_closing_tags = [
     "img",
     "input",
@@ -21,7 +21,9 @@ export default class TILvertHTMLDocument {
     this.language = "en";
   }
 
-  private static processAttributes(attributes: Object | undefined) {
+  private static processAttributes(
+    attributes: Record<string, string | undefined> | undefined
+  ): string {
     if (!attributes) return "";
     return Object.entries(attributes).reduce(
       (accumulator, [key, value]) => `${accumulator} ${key}="${value}"`,
@@ -36,9 +38,9 @@ export default class TILvertHTMLDocument {
     language,
     title,
   }: {
-    head: Array<string>;
-    body: Array<string>;
-    meta: Array<string>;
+    head: string[];
+    body: string[];
+    meta: string[];
     language: string;
     title?: string;
   }): string {
@@ -110,7 +112,7 @@ ${body.join("")}
   public static createTag(
     name: string,
     content?: string,
-    attributes?: Object
+    attributes?: Record<string, string | undefined>
   ): string {
     return this.self_closing_tags.includes(name)
       ? `<${name}${this.processAttributes(attributes)} />\n`

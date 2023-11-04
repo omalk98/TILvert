@@ -13,4 +13,5 @@
   "singleQuote": false,
   "trailingComma": "es5",
   "withNodeModules": false
+
 }

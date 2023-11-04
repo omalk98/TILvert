@@ -8,7 +8,7 @@ export interface CLIArgument {
   default?: string;
 }
 
-export const CLIArgumentMap: Array<CLIArgument> = [
+export const CLIArgumentMap: CLIArgument[] = [
   {
     name: "Configuration",
     key: "config",

@@ -12,7 +12,7 @@ import {
 } from "./utils/file-processor";
 import { CLICommand } from "./helpers";
 
-async function main() {
+async function main(): Promise<void> {
   const Command = CLICommand.getInstance();
   if (process.argv.length < 3) {
     Command.outputHelp();
@@ -90,13 +90,16 @@ async function main() {
 
         processor.process(data);
 
-        const outDir = isDirectory
-          ? FileIO.join(
-              options.output,
-              parsedPath.dir,
-              `${parsedPath.name}.html`
-            )
-          : FileIO.join(options.output, `${parsedPath.name}.html`);
+        let outDir = "";
+        if (isDirectory) {
+          outDir = FileIO.join(
+            options.output,
+            parsedPath.dir,
+            `${parsedPath.name}.html`
+          );
+        } else {
+          outDir = FileIO.join(options.output, `${parsedPath.name}.html`);
+        }
 
         const written = await FileIO.writeFile(outDir, htmlDoc.renderHTML());
         if (!written) {
@@ -131,4 +134,4 @@ async function main() {
   console.log(`Output directory: ${FileIO.resolve(options.output)}`);
 }
 
-main();
+void main();

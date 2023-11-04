@@ -3,8 +3,8 @@ import { FileIO, TILvertHTMLDocument } from "./index";
 export default async function generateIndex(
   outputDirectory: string,
   htmlDoc: TILvertHTMLDocument,
-  links?: Array<string>
-) {
+  links?: string[]
+): Promise<void> {
   await FileIO.deleteFile(FileIO.join(outputDirectory, "index.html"));
 
   if (!links) {

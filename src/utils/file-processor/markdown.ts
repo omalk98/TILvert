@@ -3,7 +3,7 @@ import { FileProcessingStrategy } from "./index";
 
 export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
   protected convertLinks(text: string): string {
-    const markdownLinkRegex = /\[([^\]]+)\]\(([^\)]+)\)/;
+    const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/;
     const markdownLinks = text.match(new RegExp(markdownLinkRegex, "g"));
     if (markdownLinks && markdownLinks.length > 0) {
       markdownLinks.forEach((link) => {
@@ -45,7 +45,7 @@ export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
   }
 
   protected convertItalic(text: string): string {
-    const markdownItalicRegex = /[\*_]([^_]+)[\*_]/;
+    const markdownItalicRegex = /[*_]([^_]+)[*_]/;
     const markdownItalicList = text.match(new RegExp(markdownItalicRegex, "g"));
     if (markdownItalicList && markdownItalicList.length > 0) {
       markdownItalicList.forEach((italic) => {
@@ -62,7 +62,7 @@ export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
   }
 
   protected convertBold(text: string): string {
-    const markdownBoldRegex = /[\*_]{2}([^_]+)[\*_]{2}/;
+    const markdownBoldRegex = /[*_]{2}([^_]+)[*_]{2}/;
     const markdownBoldList = text.match(new RegExp(markdownBoldRegex, "g"));
     if (markdownBoldList && markdownBoldList.length > 0) {
       markdownBoldList.forEach((bold) => {

@@ -5,18 +5,18 @@ import { FileIO } from "../utils";
 
 export default class CLICommand {
   private static instance: CLICommand;
-  private program: Command;
+  private readonly program: Command;
   private options: OptionValues;
-  private arguments: Array<string>;
+  private readonly arguments: string[];
 
-  public static getInstance(commandList?: Array<string>): CLICommand {
+  public static getInstance(commandList?: string[]): CLICommand {
     if (!CLICommand.instance) {
       CLICommand.instance = new CLICommand(commandList);
     }
     return CLICommand.instance;
   }
 
-  private constructor(commandList?: Array<string>) {
+  private constructor(commandList?: string[]) {
     this.program = new Command();
     this.program
       .name(process.env.npm_package_name ?? "tilvert")
@@ -90,7 +90,7 @@ export default class CLICommand {
     this.options[key] = value;
   }
 
-  public getArguments(): Array<string> {
+  public getArguments(): string[] {
     return this.arguments;
   }
 
