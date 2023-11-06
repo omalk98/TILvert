@@ -5,7 +5,7 @@ import { FileIO } from "../utils";
 
 export default class CLICommand {
   private static instance: CLICommand;
-  private readonly program: Command;
+  private readonly program: Command = new Command();
   private options: OptionValues;
   private readonly arguments: string[];
 
@@ -17,7 +17,6 @@ export default class CLICommand {
   }
 
   private constructor(commandList?: string[]) {
-    this.program = new Command();
     this.program
       .name(process.env.npm_package_name ?? "tilvert")
       .version(
@@ -41,10 +40,10 @@ export default class CLICommand {
       );
     });
 
+    this.program.parse(commandList ?? process.argv);
+
     this.options = this.program.opts();
     this.arguments = this.program.args;
-
-    this.program.parse(process.argv);
 
     if (this.options.config) {
       this.readConfigFile(this.options.config);

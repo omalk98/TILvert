@@ -57,7 +57,7 @@ export default class FileIO {
     data: string
   ): Promise<boolean> => {
     try {
-      const tmp = FileIO.split(path);
+      const tmp = this.split(path);
       tmp.pop();
       await this.mkdirIfNotExists(join(...tmp));
 

@@ -1,5 +1,5 @@
 import TILvertHTMLDocument from "../html-doc";
-import { FileProcessingStrategy } from "./index";
+import { FileProcessingStrategy } from "./base";
 
 export default class TextProcessingStrategy extends FileProcessingStrategy {
   protected convertLinks(text: string): string {

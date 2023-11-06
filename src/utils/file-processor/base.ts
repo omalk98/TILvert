@@ -17,6 +17,9 @@ export class FileProcessingStrategy implements IFileProcessor {
     if (segments[1]?.match(/^\r?\n/)) {
       title = segments[0]?.replace(/\r?\n/, "") as string;
       segments.shift();
+      if (segments[0]?.match(/^\r?\n/)) {
+        segments[0] = segments[0].substring(segments[0].match(/^\r\n/) ? 2 : 1);
+      }
     }
     return title;
   }
@@ -27,8 +30,10 @@ export class FileProcessingStrategy implements IFileProcessor {
   ): TILvertHTMLDocument {
     const segments = this.split(data);
     const title = this.extractTitle(segments);
-    htmlDocument.appendToHead(TILvertHTMLDocument.createTag("title", title));
-    htmlDocument.appendToBody(TILvertHTMLDocument.createTag("h1", title));
+    if (title) {
+      htmlDocument.appendToHead(TILvertHTMLDocument.createTag("title", title));
+      htmlDocument.appendToBody(TILvertHTMLDocument.createTag("h1", title));
+    }
     segments.forEach((segment) => {
       htmlDocument.appendToBody(TILvertHTMLDocument.createTag("p", segment));
     });
@@ -61,3 +66,23 @@ export default class FileProcessor implements IFileProcessor {
     return this.ProcessingStrategy.process(data, this.HTMLDocument);
   }
 }
+
+export const baseHTMLTest = ({
+  head = [],
+  body = [],
+}: {
+  head?: string[];
+  body?: string[];
+}): string => {
+  return (
+    `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">\n` +
+    (head.join("") && "\n") +
+    "</head>\n<body>\n" +
+    body.join("") +
+    "</body>\n</html>\n"
+  );
+};

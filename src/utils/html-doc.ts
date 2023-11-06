@@ -44,21 +44,20 @@ export default class TILvertHTMLDocument {
     language: string;
     title?: string;
   }): string {
-    return `<!DOCTYPE html>
+    return (
+      `<!DOCTYPE html>
 <html lang="${language || "en"}">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-${meta.join("")}
-${head.join("")}
-${title ? `<title>${title}</title>` : ""}
-</head>
-<body>
-${title ? `<h1>${title}</h1>` : ""}
-${body.join("")}
-</body>
-</html>
-`;
+<meta name="viewport" content="width=device-width, initial-scale=1.0">\n` +
+      (meta.join("") && "\n") +
+      (head.join("") && "\n") +
+      ((title ? `<title>${title}</title>` : "") && "\n") +
+      "</head>\n<body>\n" +
+      ((title ? `<h1>${title}</h1>` : "") && "\n") +
+      body.join("") +
+      "</body>\n</html>\n"
+    );
   }
 
   public setTitle(title: string): void {

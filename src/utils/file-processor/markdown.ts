@@ -1,5 +1,5 @@
 import TILvertHTMLDocument from "../html-doc";
-import { FileProcessingStrategy } from "./index";
+import { FileProcessingStrategy } from "./base";
 
 export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
   protected convertLinks(text: string): string {
@@ -45,7 +45,7 @@ export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
   }
 
   protected convertItalic(text: string): string {
-    const markdownItalicRegex = /[*_]([^_]+)[*_]/;
+    const markdownItalicRegex = /[*_]([^*_]+)[*_]/;
     const markdownItalicList = text.match(new RegExp(markdownItalicRegex, "g"));
     if (markdownItalicList && markdownItalicList.length > 0) {
       markdownItalicList.forEach((italic) => {
@@ -98,7 +98,7 @@ export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
   }
 
   protected convertHr(text: string): string {
-    const markdownHrRegex = /^\s*?---\s*$/;
+    const markdownHrRegex = /^\s*---\s*$/;
     const markdownHrs = text.match(new RegExp(markdownHrRegex, "g"));
     if (markdownHrs && markdownHrs.length > 0) {
       markdownHrs.forEach((hr) => {
@@ -114,8 +114,6 @@ export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
   ): TILvertHTMLDocument {
     data = this.convertCodeBlocks(data);
 
-    data = this.convertHr(data);
-
     const segments = this.split(data);
     if (!htmlDocument.getTitle()) {
       const title = this.extractTitle(segments);
@@ -125,8 +123,9 @@ export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
     segments.forEach((segment) => {
       segment = this.convertLinks(segment);
       segment = this.convertInlineCodeBlocks(segment);
-      segment = this.convertItalic(segment);
       segment = this.convertBold(segment);
+      segment = this.convertItalic(segment);
+      segment = this.convertHr(segment);
       htmlDocument.appendToBody(TILvertHTMLDocument.createTag("p", segment));
     });
     return htmlDocument;

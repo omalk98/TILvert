@@ -1,1 +1,1 @@
-(pnpm lint && pnpm prettier) || (npm lint && npm prettier)
+(pnpm test && pnpm lint && pnpm prettier) || (npm test && npm lint && npm prettier)

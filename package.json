@@ -20,7 +20,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest --run",
+    "test:watch": "vitest --watch",
     "start": "node ./dist/main.js",
     "dev": "(pnpm run build || npm run build) && node ./dist/main.js",
     "deploy": "gh-pages -d ./til",
@@ -53,7 +54,8 @@
     "husky": "^8.0.3",
     "prettier": "^3.0.3",
     "toml": "^3.0.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
   },
   "dependencies": {
     "commander": "^11.0.0",
@@ -62,8 +64,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "(pnpm lint && pnpm prettier) || (npm lint && npm prettier)"
+      "pre-commit": "(pnpm test && pnpm lint && pnpm prettier) || (npm test && npm lint && npm prettier)"
     }
   }
-  
 }
