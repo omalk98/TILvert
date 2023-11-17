@@ -8,12 +8,11 @@ on:
       - "master"
 
 jobs:
-  build:
+  lint:
+    timeout-minutes: 3
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.TOKEN }}
       - uses: pnpm/action-setup@v2
         with:
           version: 7
@@ -27,17 +26,32 @@ jobs:
       - name: Format
         run: pnpm run prettier
 
-      - name: Build
-        run: pnpm run build
+  test:
+    timeout-minutes: 3
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
 
       - name: Test
         run: pnpm run test
 
-      - name: Create release branch
-        run: |
-          git config user.email "77292466+omalk98@users.noreply.github.com"
-          git config user.name "Omar Hussein"
-          git checkout -b release
-          git add -f dist/ package.json
-          git commit -m "Create release branch"
-          git push origin release --force
+  build:
+    timeout-minutes: 3
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
