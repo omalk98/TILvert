@@ -33,4 +33,23 @@ describe("Tests File Processor wih Text Strategy", () => {
       })
     );
   });
+
+  test("Process Section", () => {
+    const textProcessor = createProcessor();
+    const testText =
+      "Test Title\n\n\nhi there, this is a test\n\nhttps://example.com\n\nThis page should have 3 paragraphs, an anchor tag, and a title + h1";
+
+    expect(textProcessor.process(testText).renderHTML()).toBe(
+      baseHTMLTest({
+        head: ["<title>Test Title</title>\n"],
+        body: [
+          "<h1>Test Title</h1>\n",
+          "<p>hi there, this is a test</p>\n",
+          // eslint-disable-next-line quotes, @typescript-eslint/quotes
+          '<p><a href="https://example.com" target="_blank">https://example.com</a>\n</p>\n',
+          "<p>This page should have 3 paragraphs, an anchor tag, and a title + h1</p>\n",
+        ],
+      })
+    );
+  });
 });

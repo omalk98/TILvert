@@ -15,7 +15,7 @@ export default class TextProcessingStrategy extends FileProcessingStrategy {
     return text;
   }
 
-  public process(
+  public override process(
     data: string,
     htmlDocument: TILvertHTMLDocument
   ): TILvertHTMLDocument {

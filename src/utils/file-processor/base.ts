@@ -29,10 +29,9 @@ export class FileProcessingStrategy implements IFileProcessor {
     htmlDocument: TILvertHTMLDocument
   ): TILvertHTMLDocument {
     const segments = this.split(data);
-    const title = this.extractTitle(segments);
-    if (title) {
-      htmlDocument.appendToHead(TILvertHTMLDocument.createTag("title", title));
-      htmlDocument.appendToBody(TILvertHTMLDocument.createTag("h1", title));
+    if (!htmlDocument.getTitle()) {
+      const title = this.extractTitle(segments);
+      htmlDocument.setTitle(title);
     }
     segments.forEach((segment) => {
       htmlDocument.appendToBody(TILvertHTMLDocument.createTag("p", segment));
@@ -80,7 +79,7 @@ export const baseHTMLTest = ({
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">\n` +
-    (head.join("") && "\n") +
+    head.join("") +
     "</head>\n<body>\n" +
     body.join("") +
     "</body>\n</html>\n"

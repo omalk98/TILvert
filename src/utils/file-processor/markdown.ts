@@ -108,7 +108,7 @@ export default class MarkdownProcessingStrategy extends FileProcessingStrategy {
     return text;
   }
 
-  public process(
+  public override process(
     data: string,
     htmlDocument: TILvertHTMLDocument
   ): TILvertHTMLDocument {
