@@ -52,9 +52,9 @@ export default class TILvertHTMLDocument {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">\n` +
       (meta.join("") && "\n") +
       (head.join("") && "\n") +
-      ((title ? `<title>${title}</title>` : "") && "\n") +
+      (title ? this.createTag("title", title) : "") +
       "</head>\n<body>\n" +
-      ((title ? `<h1>${title}</h1>` : "") && "\n") +
+      (title ? this.createTag("h1", title) : "") +
       body.join("") +
       "</body>\n</html>\n"
     );
