@@ -5,13 +5,15 @@ A simple tool to convert TILs from txt files to HTML
 ## Installation
 
 ```bash
-$ npm install -g https://github.com/omalk98/TILvert.git#release
+$ pnpm install -g tilvert
+# or using the release branch
+$ pnpm install -g https://github.com/omalk98/TILvert.git#release
 ```
 
 ## Uninstall
 
 ```bash
-$ npm uninstall -g tilvert
+$ pnpm uninstall -g tilvert
 ```
 
 ## Usage
@@ -62,7 +64,7 @@ TILvert is licensed under the [MIT License](https://mit-license.org/)
 - [x] Customizable output directory
 - [x] Convert markdown files to HTML
 
-#### Markdown Support
+### Markdown Support
 
 - [x] Links
 - [x] Italics
@@ -82,5 +84,5 @@ $ tilvert -e txt -o ./til -s https://cdn.jsdelivr.net/npm/water.css@2/out/water.
 
 ```bash
 $ node dist/main.js --extension txt --output ./til --stylesheet https://cdn.jsdelivr.net/npm/water.css@2/out/water.css
-$ npm run start -- --extension txt --output ./til --stylesheet https://cdn.jsdelivr.net/npm/water.css@2/out/water.css
+$ pnpm run start -- --extension txt --output ./til --stylesheet https://cdn.jsdelivr.net/npm/water.css@2/out/water.css
 ```
